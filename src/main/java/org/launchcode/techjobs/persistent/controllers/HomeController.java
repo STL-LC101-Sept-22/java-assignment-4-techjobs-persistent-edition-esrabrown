@@ -1,5 +1,6 @@
 package org.launchcode.techjobs.persistent.controllers;
 
+import org.launchcode.techjobs.persistent.models.Employer;
 import org.launchcode.techjobs.persistent.models.Job;
 import org.launchcode.techjobs.persistent.models.Skill;
 import org.launchcode.techjobs.persistent.models.data.EmployerRepository;
@@ -32,7 +33,6 @@ public class HomeController {
 
     @RequestMapping("")
     public String index(Model model) {
-        model.addAttribute("title", "My Jobs");
         model.addAttribute("jobs", jobRepository.findAll());
 
         return "index";
@@ -40,27 +40,22 @@ public class HomeController {
 
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
-        model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
         model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills",skillRepository.findAll());
         return "add";
     }
 
-    /* --Didn't understand what to do --
-     part-3, num4:
-     In processAddJobForm, add code inside of this method to select the employer object that
-     has been chosen to be affiliated with the new job. You will need to select the employer using the
-     request parameter you’ve added to the method.
-     */
     @PostMapping("add")
     public String processAddJobForm(@ModelAttribute @Valid Job newJob,
                                        Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Add Job");
             return "add";
         }
+
+        Employer employer = employerRepository.findById(employerId).orElse(new Employer());
+        newJob.setEmployer(employer);
 
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
         newJob.setSkills(skillObjs);

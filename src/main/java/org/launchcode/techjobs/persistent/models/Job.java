@@ -14,7 +14,7 @@ public class Job extends AbstractEntity{
     private Employer employer;
 
     @ManyToMany
-    private List<Skill> skills = new ArrayList<>();
+    private List<Skill> skills;
     public Job() {
     }
 
@@ -33,7 +33,7 @@ public class Job extends AbstractEntity{
         this.employer = employer;
     }
 
-    public List<Skill> getSkills() {
+    public Iterable<Skill> getSkills() {
         return skills;
     }
 

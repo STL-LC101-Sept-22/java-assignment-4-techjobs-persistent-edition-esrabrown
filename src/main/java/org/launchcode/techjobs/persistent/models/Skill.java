@@ -14,8 +14,8 @@ public class Skill extends AbstractEntity {
     @ManyToMany annotation with an argument mappedBy="skills" to configure this mapping.
     */
     @ManyToMany(mappedBy = "skills")
-    private String description;
     private List<Job> jobs = new ArrayList<>();
+    private String description;
 
     public Skill(){
     }
