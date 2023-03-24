@@ -10,12 +10,14 @@ import java.util.List;
 public class Skill extends AbstractEntity {
 
 
+    private String description;
+
     /* This field has a many-to-many type relationship with skills.You’ll need to add the
     @ManyToMany annotation with an argument mappedBy="skills" to configure this mapping.
     */
     @ManyToMany(mappedBy = "skills")
     private List<Job> jobs = new ArrayList<>();
-    private String description;
+
 
     public Skill(){
     }
@@ -32,7 +34,5 @@ public class Skill extends AbstractEntity {
         return jobs;
     }
 
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-    }
+
 }
